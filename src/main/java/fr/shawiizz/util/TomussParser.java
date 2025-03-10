@@ -121,16 +121,6 @@ public class TomussParser {
         return new TomussModule(moduleJson.table_title, moduleJson.ue, notes);
     }
 
-    private static class NoteColumnWithPosition {
-        int position;
-        TomussGradesModel.TomussColumn column;
-
-        NoteColumnWithPosition(int position, TomussGradesModel.TomussColumn column) {
-            this.position = position;
-            this.column = column;
-        }
-    }
-
     /**
      * Extracts the Apogee code from the UE string
      * The UE string can be in the format "UE-APOGEE_CODE@XXX" or "APOGEE_CODE@XXX"
@@ -152,5 +142,15 @@ public class TomussParser {
             ueExtracted = secondPart[0].trim();
 
         return ueExtracted;
+    }
+
+    private static class NoteColumnWithPosition {
+        int position;
+        TomussGradesModel.TomussColumn column;
+
+        NoteColumnWithPosition(int position, TomussGradesModel.TomussColumn column) {
+            this.position = position;
+            this.column = column;
+        }
     }
 }

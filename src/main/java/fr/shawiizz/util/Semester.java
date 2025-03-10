@@ -14,6 +14,45 @@ public class Semester {
         this.year = year;
     }
 
+    /**
+     * Returns the semester from the given year and season
+     */
+    public static Semester fromYearAndSeason(int year, Season season) {
+        return new Semester(season, year);
+    }
+
+    /**
+     * Returns the current semester
+     */
+    public static Semester current() {
+        int year = LocalDate.now().getYear();
+        int month = LocalDate.now().getMonthValue();
+
+        return new Semester(month >= 9 ? Season.AUTOMNE : Season.PRINTEMPS, year);
+    }
+
+    /**
+     * Returns the semester number from the first semester to the wanted semester
+     * <p>
+     * Example:
+     * Semester firstSemester = new Semester(Season.AUTOMNE, 2022);
+     * Semester wantedSemester = new Semester(Season.PRINTEMPS, 2024);
+     * => 4
+     *
+     * @param firstSemester  The first semester of the BUT (start index)
+     * @param wantedSemester The wanted semester number
+     * @return The semester number
+     */
+    public static int getSemesterNumber(Semester firstSemester, Semester wantedSemester) {
+        int semesterNumber = 1;
+        Semester semester = firstSemester;
+        while (!semester.equals(wantedSemester)) {
+            semester = semester.next();
+            semesterNumber++;
+        }
+        return semesterNumber;
+    }
+
     public Season getSeason() {
         return season;
     }
@@ -49,45 +88,6 @@ public class Semester {
      */
     public Semester previous() {
         return this.season == Season.PRINTEMPS ? new Semester(Season.AUTOMNE, this.year - 1) : new Semester(Season.PRINTEMPS, this.year);
-    }
-
-    /**
-     * Returns the semester from the given year and season
-     */
-    public static Semester fromYearAndSeason(int year, Season season) {
-        return new Semester(season, year);
-    }
-
-    /**
-     * Returns the current semester
-     */
-    public static Semester current() {
-        int year = LocalDate.now().getYear();
-        int month = LocalDate.now().getMonthValue();
-
-        return new Semester(month >= 9 ? Season.AUTOMNE : Season.PRINTEMPS, year);
-    }
-
-    /**
-     * Returns the semester number from the first semester to the wanted semester
-     * <p>
-     * Example:
-     * Semester firstSemester = new Semester(Season.AUTOMNE, 2022);
-     * Semester wantedSemester = new Semester(Season.PRINTEMPS, 2024);
-     * => 4
-     *
-     * @param firstSemester The first semester of the BUT (start index)
-     * @param wantedSemester The wanted semester number
-     * @return The semester number
-     */
-    public static int getSemesterNumber(Semester firstSemester, Semester wantedSemester) {
-        int semesterNumber = 1;
-        Semester semester = firstSemester;
-        while (!semester.equals(wantedSemester)) {
-            semester = semester.next();
-            semesterNumber++;
-        }
-        return semesterNumber;
     }
 
     @Override

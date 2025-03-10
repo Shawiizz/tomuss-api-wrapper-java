@@ -36,15 +36,13 @@ public class TomussService {
      * Get the TOMUSS page for the given semester
      *
      * @param semester The semester
-     * @param serviceRedirectUrl The service redirect URL
-     *
      * @return The TOMUSS page content as a string
      */
-    public String getTomussPage(Semester semester, String serviceRedirectUrl) throws IOException, InterruptedException {
+    public String getTomussPage(Semester semester) throws IOException, InterruptedException {
         Pattern regexUrl = Pattern.compile("https://[^\"]+");
         Pattern regexCountdown = Pattern.compile("id=\"t\">(\\d+\\.\\d+)");
 
-        String redirectUrl = serviceRedirectUrl != null ? serviceRedirectUrl : authService.serviceRedirect(semester.getTomussHomeUrl(), true);
+        String redirectUrl = authService.serviceRedirect(semester.getTomussHomeUrl(), true);
         Matcher redirectMatch = regexUrl.matcher(redirectUrl);
         if (!redirectMatch.find()) {
             throw new IllegalArgumentException("Could not find the redirect URL");
@@ -60,18 +58,7 @@ public class TomussService {
             TimeUnit.SECONDS.sleep((long) Float.parseFloat(countdownMatch.group(1)));
         }
 
-        return this.getTomussPage(semester, redirectUrl);
-    }
-
-    /**
-     * Get the TOMUSS page for the given semester
-     *
-     * @param semester The semester
-     *
-     * @return The TOMUSS page content as a string
-     */
-    public String getTomussPage(Semester semester) throws IOException, InterruptedException {
-        return this.getTomussPage(semester, null);
+        return this.getTomussPage(semester);
     }
 
     /**
