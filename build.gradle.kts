@@ -20,7 +20,7 @@ publishing {
     }
     repositories {
         maven {
-            url = uri("https://forge.univ-lyon1.fr/api/v4/projects/36364/packages/maven")
+            url = uri("https://forge.univ-lyon1.fr/api/v4/projects/38352/packages/maven")
             credentials(HttpHeaderCredentials::class) {
                 name = "Private-Token"
                 value =
