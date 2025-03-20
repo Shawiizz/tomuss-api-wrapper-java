@@ -9,6 +9,8 @@ public class Semester {
     private Season season;
     private int year;
 
+    public Semester() { }
+
     public Semester(Season season, int year) {
         this.season = season;
         this.year = year;
